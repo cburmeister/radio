@@ -1,0 +1,23 @@
+icecast:
+  image: moul/icecast:latest
+  volumes:
+    - /etc/localtime:/etc/localtime:ro
+  environment:
+    - ICECAST_SOURCE_PASSWORD
+    - ICECAST_ADMIN_PASSWORD
+    - ICECAST_PASSWORD
+    - ICECAST_RELAY_PASSWORD
+  ports:
+    - 8000:8000
+liquidsoap:
+  image: moul/liquidsoap:latest
+  command: liquidsoap -v --debug /liquidsoap/liquidsoap.liq
+  user: liquidsoap
+  volumes:
+    - ./data:/data
+    - ./liquidsoap:/liquidsoap
+    - /etc/localtime:/etc/localtime:ro
+  ports:
+    - 8800:8800
+  links:
+    - icecast
