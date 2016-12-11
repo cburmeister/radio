@@ -14,7 +14,7 @@ liquidsoap:
   command: liquidsoap -v --debug /liquidsoap/liquidsoap.liq
   user: liquidsoap
   volumes:
-    - ./data:/data
+    - "$DATA_PATH:/data"
     - ./liquidsoap:/liquidsoap
     - /etc/localtime:/etc/localtime:ro
   ports:
