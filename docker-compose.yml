@@ -1,23 +1,27 @@
-icecast:
-  image: moul/icecast:latest
-  volumes:
-    - /etc/localtime:/etc/localtime:ro
-  environment:
-    - ICECAST_SOURCE_PASSWORD
-    - ICECAST_ADMIN_PASSWORD
-    - ICECAST_PASSWORD
-    - ICECAST_RELAY_PASSWORD
-  ports:
-    - 8000:8000
-liquidsoap:
-  image: moul/liquidsoap:latest
-  command: liquidsoap -v --debug /liquidsoap/liquidsoap.liq
-  user: liquidsoap
-  volumes:
-    - "$DATA_PATH:/data"
-    - ./liquidsoap:/liquidsoap
-    - /etc/localtime:/etc/localtime:ro
-  ports:
-    - 8800:8800
-  links:
-    - icecast
+version: "3"
+services:
+  icecast:
+    environment:
+      - ICECAST_ADMIN_PASSWORD=somethingsecret
+      - ICECAST_PASSWORD=somethingsecret
+      - ICECAST_RELAY_PASSWORD=somethingsecret
+      - ICECAST_SOURCE_PASSWORD=somethingsecret
+    image: moul/icecast:latest
+    ports:
+      - 8000:8000
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+  liquidsoap:
+    environment:
+      - ICECAST_HOST=icecast
+      - ICECAST_PORT=8000
+      - ICECAST_SOURCE_PASSWORD
+    command: liquidsoap -v --debug /liquidsoap/liquidsoap.liq
+    image: moul/liquidsoap:latest
+    ports:
+      - 8800:8800
+    user: liquidsoap
+    volumes:
+      - ${LIQUIDSOAP_CONFIG}:/liquidsoap/liquidsoap.liq
+      - ${LIQUIDSOAP_DATA}:/data
+      - /etc/localtime:/etc/localtime:ro
