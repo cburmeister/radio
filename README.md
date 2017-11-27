@@ -6,50 +6,33 @@ Internet radio with [liquidsoap](http://savonet.sourceforge.net/) and
 
 ---
 
-## Media
+This is essentially a `docker-compose.yml` with two services;
+[moul/icecast](https://hub.docker.com/r/moul/icecast/) and
+[moul/liquidsoap](https://hub.docker.com/r/moul/liquidsoap/).
 
-First you need a directory of media and a playlist to stream.
-```bash
-$ tree data
-data
-├── mix1.mp3
-├── mix2.mp3
-├── mix3.mp3
-└── mix4.mp3
-```
-
-> This directory will be mounted as `/data` within the `liquidsoap` container.
-
-Create a `playlist.txt` file containing paths to the mixes you want to stream:
-```bash
-$ cat data/playlist.txt
-data/mix1.mp3
-data/mix2.mp3
-```
+The idea is that you provide two things:
+- A directory of audio and playlists
+- A file which describes how to stream the audio
 
 ## Configuration
 
-Next you need to set some environment variables for configuration:
-```bash
-export ICECAST_SOURCE_PASSWORD=somethingsecret
-export ICECAST_ADMIN_PASSWORD=somethingsecret
-export ICECAST_PASSWORD=somethingsecret
-export ICECAST_RELAY_PASSWORD=somethingsecret
-export DATA_PATH=data
-```
+The following environment variables are *required*:
 
-> I stuff this into an `.env` file which is used with
-[autoenv](https://github.com/kennethreitz/autoenv) for directory-based
-environments.
+| Name                      | Purpose                                                       |
+|---------------------------|---------------------------------------------------------------|
+| `LIQUIDSOAP_CONFIG`       | An absolute path to the `liquidsoap` configuration.           |
+| `LIQUIDSOAP_DATA`         | An absolute path to a directory of audio files and playlists. |
+
+The following environment variables are *optional*:
+
+| Name                      | Purpose                                                       |
+|---------------------------|---------------------------------------------------------------|
+| `ICECAST_ADMIN_PASSWORD`  | Used for administration functions.                            |
+| `ICECAST_RELAY_PASSWORD`  | Used when a slave requests the list of streams to relay.      |
+| `ICECAST_SOURCE_PASSWORD` | Used by sources to connect to Icecast.                        |
 
 ## Deployment
 
-Now you can begin broadcasting these mixes with `docker-compose up -d`.
+Start up the service with `docker-compose up -d`.
 
-Once the services are running you can view the `icecast` interface at `:8000`.
-
----
-
-Currently i'm running this on a [Digital Ocean](https://www.digitalocean.com/)
-droplet but this can run anywhere docker can be run like
-[EC2](https://aws.amazon.com/ec2/) or [Linode](https://www.linode.com/).
+Once running you can view the `icecast` interface at `:8000`.
