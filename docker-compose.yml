@@ -2,10 +2,10 @@ version: "3"
 services:
   icecast:
     environment:
-      - ICECAST_ADMIN_PASSWORD=somethingsecret
-      - ICECAST_PASSWORD=somethingsecret
-      - ICECAST_RELAY_PASSWORD=somethingsecret
-      - ICECAST_SOURCE_PASSWORD=somethingsecret
+      - ICECAST_ADMIN_PASSWORD
+      - ICECAST_PASSWORD
+      - ICECAST_RELAY_PASSWORD
+      - ICECAST_SOURCE_PASSWORD
     image: moul/icecast:latest
     ports:
       - 8000:8000

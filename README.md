@@ -20,16 +20,11 @@ The following environment variables are *required*:
 
 | Name                      | Purpose                                                       |
 |---------------------------|---------------------------------------------------------------|
-| `LIQUIDSOAP_CONFIG`       | An absolute path to the `liquidsoap` configuration.           |
-| `LIQUIDSOAP_DATA`         | An absolute path to a directory of audio files and playlists. |
-
-The following environment variables are *optional*:
-
-| Name                      | Purpose                                                       |
-|---------------------------|---------------------------------------------------------------|
 | `ICECAST_ADMIN_PASSWORD`  | Used for administration functions.                            |
 | `ICECAST_RELAY_PASSWORD`  | Used when a slave requests the list of streams to relay.      |
 | `ICECAST_SOURCE_PASSWORD` | Used by sources to connect to Icecast.                        |
+| `LIQUIDSOAP_CONFIG`       | An absolute path to the `liquidsoap` configuration.           |
+| `LIQUIDSOAP_DATA`         | An absolute path to a directory of audio files and playlists. |
 
 ## Deployment
 
